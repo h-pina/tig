@@ -1,0 +1,5 @@
+add_executable(tig_test object_test.c)
+target_link_libraries(tig_test PUBLIC tig_lib crypto Unity)
+target_include_directories(tig_test PUBLIC "${PROJECT_SOURCE_DIR}/src")
+target_include_directories(tig_test PUBLIC "${PROJECT_SOURCE_DIR}/external/Unity/src")
+add_test(t_test tig_test)
