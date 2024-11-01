@@ -1,8 +1,9 @@
 
 Git clone
 
-### TODO
-[ ] - Create build system using Cmake
+### Roadmap 
 
+[x] - Setup build system for building project and run unit tests
+[ ] - Create first iteration of "git hash-object" --> parse arguments and return hash
 
 
