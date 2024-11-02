@@ -4,9 +4,10 @@
 #include <regex.h>
 
 //TODO: Maybe improve this content lated?
-HashObjOpts defaultOpts = {
+HashObjArgs defaultOpts = {
 		.write = 0,
 		.useStdin = 0,
+		.filename = 0,
 };
 static const char* content = "Hello World";
 

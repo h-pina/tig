@@ -6,15 +6,11 @@
 #include <unistd.h>
 #include <openssl/sha.h>
 
-void hashObjCmd(HashObjOpts ho){
-
-
-}
-void getContent(){
-
+void readContent(const char* contentBuffer, int useStdin){
 
 }
-void hashObject(const char* content, HashObjOpts opts, char* resultBuff){
+
+void hashObject(const char* content, HashObjArgs opts, char* resultBuff){
 	//First iteration: Add header without null byte at the end of header
 	//TODO: Change this to a custom function. If the file contains a \0 
 	// 			there might be a problem
@@ -45,6 +41,4 @@ void saveToObjDb(const char* hash, const char* content){
 
 }
 
-
-
-
+void hashObjCmd(HashObjArgs ho){ }
