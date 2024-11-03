@@ -6,7 +6,6 @@
 
 //TODO: Error for cases where invalid options
 //TODO: Add help option
-
 HashObjArgs parseHashObjArgs(char** argv, int argc){
 	optind = 1;
 	HashObjArgs ho = {.write = 0, .useStdin = 0, .filename = ""};
@@ -31,7 +30,7 @@ HashObjArgs parseHashObjArgs(char** argv, int argc){
 	}
 
 	if(!ho.useStdin){
-		//Create validation for filenames
+		//TODO: Create validation for filenames
 		strcpy(ho.filename,argv[argc-1]);
 	}
 	return ho;
