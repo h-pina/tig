@@ -1,8 +1,12 @@
 #include "object.h"
+#include "init.h"
+#include "logger.h"
+
 #include <bits/getopt_core.h>
 #include <getopt.h>
 #include <string.h>
 #include <unistd.h>
+#include <stdio.h>
 
 //TODO: Error for cases where invalid options
 //TODO: Add help option
@@ -36,9 +40,37 @@ HashObjArgs parseHashObjArgs(char** argv, int argc){
 	return ho;
 }
 
+void printHelpMsg(){
+	printf(
+		"\033[1mTig - A git clone for learning\033[0m \n"
+		"usage: tig [init | hash-object]\n"
+		"Currently available subcommands:\n"
+		" init          initializes tig folder\n"
+		" hash-object   hashes the selected file for the object database\n"
+	);
+}
+
 void parseCliCommand(char** argv, int argc){
-	//Function pointers tuples(commands, parseArgsFn), and
-	//parseCliFunction is just a switch basically
+loggerInit(debug);
+
+if(argc == 1){
+	printHelpMsg();
+	return;
+}
+
+//Function pointers tuples(commands, parseArgsFn), and
+//parseCliFunction is just a switch basically
+if(strcmp(argv[1], "hash-object") == 0){
+	log_dbg("Launching hash-object command");
 	hashObjCmd(parseHashObjArgs(argv, argc));
+}
+else if(strcmp(argv[1], "init") == 0){
+		log_dbg("Init command identified, launching init() function");
+		init();
+		return;
+	}
+	else{
+		printHelpMsg();
+	}
 }
 

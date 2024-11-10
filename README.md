@@ -14,11 +14,19 @@ imposed to myself for this project
 ### Conventions
 
 - Every function named with the prefix sf_ should have its return variable freed;
+- All errors and exceptions stop the code execturion, returning 1. Since this is a learning project, I`m more
+interested in understanding what is breaking the code than to build a reliable tool (Altough 
+implementing reliability can be a fun thing in the future)
 
 ### Roadmap 
-
+Kickstart:
 - [x] Setup build system for building project and run unit tests
 - [x] Create first iteration of "git hash-object" --> parse arguments and return hash
-- [ ] Create init first iteration --> build obj database 
+- [x] Create init first iteration --> build obj database 
 - [ ] store hashed object inside object database
+ 
+Error handling and improved tests
+- [x] Create a logger class
+- [ ] Create some error classes
+- [ ] Consider create a separate file for blob objects, since 'objects' is a general term inside git architecture
 
