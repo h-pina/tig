@@ -55,7 +55,6 @@ void parseCliCommand(char** argv, int argc){
 
 	if(argc == 1){
 		printHelpMsg();
-		return;
 	}
 
 	//Function pointers tuples(commands, parseArgsFn), and
@@ -68,7 +67,6 @@ void parseCliCommand(char** argv, int argc){
 	else if(strcmp(argv[1], "init") == 0){
 		log_dbg("Init command identified, launching init() function");
 		init();
-		return;
 	} 
 	else{
 		printHelpMsg();

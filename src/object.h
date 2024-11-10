@@ -10,6 +10,6 @@ typedef struct{
 } HashObjArgs;
 
 void readContent(char* contentBuffer, int useStdin);
-void hashObject(const char* content, HashObjArgs opts, char* result);
+char* sf_hashObject(const char* content, HashObjArgs opts);
 void saveToObjDb(const char* hash, const char* content);
 void hashObjCmd(HashObjArgs ho);
