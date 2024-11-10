@@ -51,24 +51,25 @@ void printHelpMsg(){
 }
 
 void parseCliCommand(char** argv, int argc){
-loggerInit(debug);
+	loggerInit(debug);
 
-if(argc == 1){
-	printHelpMsg();
-	return;
-}
+	if(argc == 1){
+		printHelpMsg();
+		return;
+	}
 
-//Function pointers tuples(commands, parseArgsFn), and
-//parseCliFunction is just a switch basically
-if(strcmp(argv[1], "hash-object") == 0){
-	log_dbg("Launching hash-object command");
-	hashObjCmd(parseHashObjArgs(argv, argc));
-}
-else if(strcmp(argv[1], "init") == 0){
+	//Function pointers tuples(commands, parseArgsFn), and
+	//parseCliFunction is just a switch basically
+	if(strcmp(argv[1], "hash-object") == 0){
+		log_dbg("Launching hash-object command");
+		hashObjCmd(parseHashObjArgs(argv, argc));
+		log_dbg("hash-object command finished");
+	}
+	else if(strcmp(argv[1], "init") == 0){
 		log_dbg("Init command identified, launching init() function");
 		init();
 		return;
-	}
+	} 
 	else{
 		printHelpMsg();
 	}
