@@ -27,7 +27,7 @@ void cli_parses_hashObject_cmd_Args(void){
 
 void cli_parses_hashObject_cmd_with_filename(void){
 	//Arrange
-	char* argv[] = {"test-2", "-w", "testfile.txt"};
+	char* argv[] = {"hash-object", "-w", "testfile.txt"};
 	int argc = 3;
 
 	HashObjArgs expected = {
@@ -46,7 +46,6 @@ void cli_parses_hashObject_cmd_with_filename(void){
 
 void tearDown(void) { }
 
-// not needed when using generate_test_runner.rb
 int main(void) {
     UNITY_BEGIN();
 		RUN_TEST(cli_parses_hashObject_cmd_Args);
