@@ -11,5 +11,5 @@ typedef struct{
 
 void readContent(char* contentBuffer, int useStdin);
 char* sf_hashObject(const char* content, HashObjArgs opts);
-void saveToObjDb(const char* hash, const char* content);
+void saveToObjDb(char* hash, const char* content);
 void hashObjCmd(HashObjArgs ho);

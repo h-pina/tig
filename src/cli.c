@@ -16,7 +16,7 @@ HashObjArgs parseHashObjArgs(char** argv, int argc){
 	int c;        
 	int option_index = 0;
 	static struct option long_options[] = {
-            {"usestdin",no_argument,0,0},
+            {"stdin",no_argument,0,0},
             {0,0,0,0 }
 	};
 
@@ -51,7 +51,7 @@ void printHelpMsg(){
 }
 
 void parseCliCommand(char** argv, int argc){
-	loggerInit(debug);
+	loggerInit(error);
 
 	if(argc == 1){
 		printHelpMsg();

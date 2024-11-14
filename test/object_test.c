@@ -15,8 +15,7 @@ void setUp(void) { }
 
 void sha1_must_be_the_same_generated_by_git(){
 	const char* expectedSha1 = "5e1c309dae7f45e0f39b1bf3ac3cd9db12e7d689";
-	char actualSha1[RESULT_BUFFER_LENGTH];
-  hashObject(content, defaultOpts, actualSha1);
+  const char* actualSha1 = sf_hashObject(content, defaultOpts);
 	TEST_ASSERT_EQUAL_STRING_MESSAGE(
 		expectedSha1, 
 		actualSha1,

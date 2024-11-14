@@ -4,5 +4,6 @@ add_library(tig_lib
 	object.c
 	utils/utils.c
 	logger.c
+	fs.c
 )
 

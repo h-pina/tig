@@ -7,7 +7,7 @@ void setUp(void) { }
 
 void cli_parses_hashObject_cmd_Args(void){
 	//Arrange
-	char* argv[] = {"hash-object", "-w", "--usestdin", "testfile.txt"};
+	char* argv[] = {"hash-object", "-w", "--stdin", "testfile.txt"};
 	int argc = 4;
 
 	HashObjArgs expected = {
