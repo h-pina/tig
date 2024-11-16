@@ -2,7 +2,6 @@
 #include "utils/utils.h"
 #include "logger.h"
 #include "fs.h"
-#include <errno.h>
 #include <linux/limits.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -14,19 +13,25 @@
 
 #define READBUFSIZE 1024
 
-void readContent(char* contentBuffer, int useStdin){
-	if(useStdin){
+//TODO: Fix the size limitation of 1024 characters
+void readContent(char* contentBuffer, HashObjArgs opts){
+	if(opts.useStdin){
 		ssize_t bytesRead = read(STDIN_FILENO, contentBuffer, READBUFSIZE);
 		contentBuffer[bytesRead] = '\0';
 	}
+	else if(strcmp(opts.filename, "") != 0){
+		log_dbg("Reading from file %s", opts.filename);
+		FILE* fp = fopen(opts.filename, "r");
+		fgets(contentBuffer, 1024, fp);	//read from file
+	}
 	else{
-		log_err("Nothing to read");
+		log_err("No content was supplied for hashing, exiting...");
 		exit(EXIT_FAILURE);
 	}
 }
 
 
-char* sf_hashObject(const char* content, HashObjArgs opts){
+char* sf_hashObject(const char* content){
 	log_dbg("Hashing object...");
 
 	//TODO: Make this construction logic more elegant
@@ -77,36 +82,38 @@ char* sf_hashObject(const char* content, HashObjArgs opts){
 }
 
 void saveToObjDb(char* hash, const char* content){
+	log_war("The saved object contents does not include the hashed header\
+				  and is not deflated");
 	log_dbg("Saving object to obj db...");
 	char** splittedHash = sf_splitString(hash, 1);
 	char folderPath[PATH_MAX], filePath[PATH_MAX];
 	char tigPath[PATH_MAX];
 	get_tig_path(tigPath);
-	log_dbg("tig base path: %s",tigPath);
+	log_dbg("Identified tig base folder path: %s",tigPath);
 	sprintf(folderPath, "%s/objects/%s", tigPath,splittedHash[0]);
-	log_dbg("Folder Path: %s",folderPath);
+	log_dbg("Hashed obj folder Path: %s",folderPath);
 	mkdir(folderPath, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
 	sprintf(filePath, "%s/%s", folderPath, splittedHash[1]);
 
-	log_dbg("File Path: %s",filePath);
+	log_dbg("Hashed obj file Path: %s",filePath);
 
 	FILE* fptr = fopen(filePath, "w");
 	if(fptr == NULL){
-		log_err("Error creating file at %s.\n Error: %s", filePath, strerror(errno));
+		log_err("Could not create file at %s", filePath);
 		exit(EXIT_FAILURE);
 	}
 	fprintf(fptr, "%s", content);
 	fclose(fptr);
 
-	/*
 	free(splittedHash);
-	*/
 }	
 
 void hashObjCmd(HashObjArgs ho){
 	char contentBuffer[READBUFSIZE] = { 0 };// must be filled with for consistent hashing
-	readContent(contentBuffer, ho.useStdin);
-	log_dbg("Content read: %s", contentBuffer); char* hash = sf_hashObject(contentBuffer, ho); printf("%s\n", hash);
+	readContent(contentBuffer, ho);
+	log_dbg("Content to hash: %s", contentBuffer); 
+	char* hash = sf_hashObject(contentBuffer); 
+	printf("%s\n", hash);
 	if(ho.write){
 		saveToObjDb(hash, contentBuffer);
 	}

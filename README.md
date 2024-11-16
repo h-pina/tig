@@ -19,14 +19,18 @@ interested in understanding what is breaking the code than to build a reliable t
 implementing reliability can be a fun thing in the future)
 
 ### Roadmap 
-- [x] Setup build system for building project and run unit tests
+- [x] Setup build system for building project and running unit tests
 - [x] Create first iteration of "git hash-object" --> parse arguments and return hash
 - [x] Create init first iteration --> build obj database 
 - [x] store hashed object inside object database
 - [x] Create a logger class
-- [ ] Improve tests and increase coverage (not looking for a specific number, but a lot of functions are untested)
+- [x] Improve test cases for current implemented functions
+- [x] Think a way to test the fs acess
+    - Solution: There is a function named _setTigFolderName_ inside the fs.c file. It allows the test functions to define a custom name for the folder. The idea is that the program will use the new folder name as the .tig folder, so the tests can run all the functions as needed. However, I`m not sure if it is completely working like this
+
 - [ ] Consider create a separate file for blob objects, since 'objects' is a general term inside git architecture
 - [ ] Create tree objects
 - [ ] Create index
+
 
 
