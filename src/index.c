@@ -24,3 +24,8 @@ Index:
 		- Every commit generetas a tree structure that reflects the whole repository. The commit object will point
 		to the tree representing the root of the project.
 */
+#include "index.h"
+
+void updateIndexCmd(UpdateIndexArgs ui){
+
+}
