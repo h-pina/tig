@@ -1,15 +1,6 @@
 #pragma once
 #include <openssl/sha.h>
 
-#define RESULT_BUFFER_LENGTH 2*SHA_DIGEST_LENGTH
-
-typedef struct{
-	int write;
-	int useStdin;
-	char filename[100];
-} HashObjArgs;
-
-void readContent(char* contentBuffer, HashObjArgs opts);
+char* sf_addHeaderToContent(char* content, const char* type);
 char* sf_hashObject(const char* content);
 void saveToObjDb(char* hash, const char* content);
-void hashObjCmd(HashObjArgs ho);

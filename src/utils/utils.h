@@ -1,3 +1,3 @@
-#include <string.h>
-#include <stdlib.h>
+#pragma once
+
 char** sf_splitString(char* string, int index);

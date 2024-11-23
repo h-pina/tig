@@ -1,8 +1,7 @@
-#include "object.h"
+#include "blob.h"
+#include "tree.h"
 #include "init.h"
 #include "logger.h"
-
-#include <bits/getopt_core.h>
 #include <getopt.h>
 #include <string.h>
 #include <unistd.h>
@@ -65,8 +64,26 @@ void parseCliCommand(char** argv, int argc){
 		log_dbg("hash-object command finished");
 	}
 	else if(strcmp(argv[1], "init") == 0){
-		log_dbg("Init command identified, launching init() function");
+		log_dbg("init command identified, launching init() function");
 		init();
+	} 
+	else if(strcmp(argv[1], "test_tree") == 0){
+		struct TreeObjEntry entries[2];
+		struct TreeObjEntry e1 = {
+			.hash = "a906cb2a4a904a152e80877d4088654daad0c859",
+			.mode = 100644,
+			.path = "README",
+			.type = "blob",
+		};
+		entries[0] = e1;
+		struct TreeObjEntry e2 = {
+			.hash = "a906cb2a4a904a152e80877d4088654daad0c859",
+			.mode = 040000,
+			.path = "lib",
+			.type = "tree",
+		};
+		entries[1] = e2;
+		createTreeObj(entries, 2);
 	} 
 	else{
 		printHelpMsg();

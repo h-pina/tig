@@ -32,7 +32,7 @@ implementing reliability can be a fun thing in the future)
     - Solution: There is a function named _setTigFolderName_ inside the fs.c file. It allows the test functions to define a custom name for the folder. The idea is that the program will use the new folder name as the .tig folder, so the tests can run all the functions as needed. However, I`m not sure if it is completely working like this
 
 ### Tree objects
-- [ ] Create tree objects interface
+- [x] Create tree objects interface
 
 ### Commit objects
 - [ ] Create commit objects interface

@@ -11,34 +11,17 @@
 #include <openssl/sha.h>
 #include <openssl/evp.h>
 
-#define READBUFSIZE 1024
-
-//TODO: Fix the size limitation of 1024 characters
-void readContent(char* contentBuffer, HashObjArgs opts){
-	if(opts.useStdin){
-		ssize_t bytesRead = read(STDIN_FILENO, contentBuffer, READBUFSIZE);
-		contentBuffer[bytesRead] = '\0';
-	}
-	else if(strcmp(opts.filename, "") != 0){
-		log_dbg("Reading from file %s", opts.filename);
-		FILE* fp = fopen(opts.filename, "r");
-		fgets(contentBuffer, 1024, fp);	//read from file
-	}
-	else{
-		log_err("No content was supplied for hashing, exiting...");
-		exit(EXIT_FAILURE);
-	}
-}
-
-
-char* sf_hashObject(const char* content){
-	log_dbg("Hashing object...");
-
+char* sf_addHeaderToContent(char* content, const char* type){
 	//TODO: Make this construction logic more elegant
 	//TODO: enable \0 in content
 	log_war("Current hash_object function cannot handle files with \\0 inside"
 				 " its content");
 	int contentLen = strlen(content); 
+
+	char header[20];
+	sprintf(header, "%s %d ", type ,contentLen); //Last char will be replaced for \0
+	int headerLen = strlen(header);
+
 	char* contentBuff = malloc(contentLen + 20); //some space for the header
 	if(contentBuff == NULL){
 		log_err(
@@ -46,25 +29,30 @@ char* sf_hashObject(const char* content){
 		);
 		exit(EXIT_FAILURE);
 	}
-
-	char header[20];
-	sprintf(header, "blob %d ", contentLen); //Last char will be replaced for \0
-	int headerLen = strlen(header);
-
 	strcat(contentBuff, header);
 	strcat(contentBuff, content);
 	contentBuff[headerLen-1] = '\0'; //Replace header last char for \0
-	int contentBuffLen = headerLen + contentLen;
+
+	return contentBuff;
+}
+
+
+char* sf_hashObject(const char* content){
+	log_dbg("Hashing object...");
+
+	int headerLen = strlen(content); 
+	int contentLen = strlen(content + headerLen + 1);
+	contentLen += headerLen + 1;
+	log_dbg("Calculated contentLen: %d", contentLen);
 	
 	//hash
 	unsigned char hash[EVP_MAX_MD_SIZE];
 	unsigned int hash_len;
 	EVP_MD_CTX* hashctx =  EVP_MD_CTX_new();
 	EVP_DigestInit_ex(hashctx, EVP_sha1(), NULL);
-	EVP_DigestUpdate(hashctx, contentBuff, contentBuffLen);
+	EVP_DigestUpdate(hashctx, content, contentLen);
 	EVP_DigestFinal_ex(hashctx, hash, &hash_len);
 
-	free(contentBuff);
 	char* resultBuff = calloc(hash_len*2+1, sizeof(char));
 	if(resultBuff == NULL){
 		log_err(
@@ -108,14 +96,3 @@ void saveToObjDb(char* hash, const char* content){
 	free(splittedHash);
 }	
 
-void hashObjCmd(HashObjArgs ho){
-	char contentBuffer[READBUFSIZE] = { 0 };// must be filled with for consistent hashing
-	readContent(contentBuffer, ho);
-	log_dbg("Content to hash: %s", contentBuffer); 
-	char* hash = sf_hashObject(contentBuffer); 
-	printf("%s\n", hash);
-	if(ho.write){
-		saveToObjDb(hash, contentBuffer);
-	}
-	free(hash);
-}
