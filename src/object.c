@@ -90,6 +90,7 @@ void saveToObjDb(char* hash, const char* content){
 		log_err("Could not create file at %s", filePath);
 		exit(EXIT_FAILURE);
 	}
+	//-------> This is the problem
 	fprintf(fptr, "%s", content);
 	fclose(fptr);
 

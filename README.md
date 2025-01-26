@@ -13,7 +13,7 @@ imposed to myself for this project
 
 ## Conventions
 
-- Every function named with the prefix sf_ should have its return variable freed;
+- Every function named with the prefix sf_ should have its return variable freed (sf stands for "should free");
 - All errors and exceptions stop the code execution, returning 1. Since this is a learning project, I`m more
 interested in understanding what is breaking the code than to build a reliable tool (Altough 
 implementing reliability can be a fun thing in the future)
@@ -32,14 +32,12 @@ implementing reliability can be a fun thing in the future)
     - Solution: There is a function named _setTigFolderName_ inside the fs.c file. It allows the test functions to define a custom name for the folder. The idea is that the program will use the new folder name as the .tig folder, so the tests can run all the functions as needed. However, I`m not sure if it is completely working like this
 
 ### Tree objects
-- [x] Create tree objects interface
+- [ ] Create tree objects interface (This will be used by the upd)
 
 ### Commit objects
 - [ ] Create commit objects interface
 - [ ] Implement git config --user.name and user.email
 - [ ] Implement commit message logic
-
---> Maybe a checkpoint to change projects a bit ?
 
 ### Index and cache-tree
 > At this stage, the interfaces are already complete, now

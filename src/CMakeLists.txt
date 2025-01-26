@@ -4,7 +4,6 @@ add_library(tig_lib
 	object.c
 	blob.c
 	tree.c
-	index.c
 	utils/utils.c
 	logger.c
 	fs.c
