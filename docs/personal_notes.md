@@ -7,12 +7,11 @@ git uses the commit pointed by HEAD to reconstruct the index entries
 
 After updating the index, running _git write tree_ will write a sequence of tree objects
 representing the whole repository on the object database. Note that this will just store them,
-but no commits will be created. To create a commit object, you can run a command called _git write-tree_
+but no commits will be created. To create a commit object, you can run a command called _git commit-tree_
 which receives a tree object as argument, and defines a parent commit.
 
 *Note:* Both the index restoration (using git restore) and the tree creation (using git write_tree)
-can be heavy operations. Because of that, the index has whats called a cache tree, which is an in-memory 
-recursive tree that mirrors the tree pointed by HEAD. 
+can be heavy operations. Because of that, the index has whats called a cache tree, which is an in-memory recursive tree that mirrors the tree pointed by HEAD. 
 
 *Note for further development:* Think of the best way to use the cache-tree :D
 
