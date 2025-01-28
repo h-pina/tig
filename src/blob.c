@@ -11,6 +11,7 @@
 //TODO: Fix the size limitation of 1024 characters
 void readContent(char* contentBuffer, HashObjArgs opts){
 	if(opts.useStdin){
+		log_dbg("Reading from content to be hashed from stdin");
 		ssize_t bytesRead = read(STDIN_FILENO, contentBuffer, READBUFSIZE);
 		contentBuffer[bytesRead] = '\0';
 	}
@@ -33,7 +34,7 @@ void hashObjCmd(HashObjArgs ho){
 	char* hash = sf_hashObject(content); 
 	printf("%s\n", hash);
 	if(ho.write){
-		saveToObjDb(hash, contentBuffer);
+		saveToObjDb(hash, content);
 	}
 	free(content);
 	free(hash);

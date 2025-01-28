@@ -91,7 +91,11 @@ void saveToObjDb(char* hash, const char* content){
 		exit(EXIT_FAILURE);
 	}
 	//-------> This is the problem
-	fprintf(fptr, "%s", content);
+	log_dbg("header len: %d", strlen(content));
+	log_dbg("content len: %d",strlen(content+strlen(content)+1));
+	const size_t headerLen = strlen(content);
+	const size_t contentLen = strlen(content + headerLen + 1);
+	fwrite(content, 1, (headerLen + contentLen), fptr);
 	fclose(fptr);
 
 	free(splittedHash);
