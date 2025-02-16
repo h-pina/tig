@@ -1,6 +1,6 @@
 ## Tree objects and index: relationships and flow
 
-When you run _git update-index_, the all the modified files are hashed and the
+When you run _git update-index_, all the modified files are hashed and the
 index entries are updated to the new hashes. If you use _git restore --staged_
 to bring back the previous index state (before the command update-index was run),
 git uses the commit pointed by HEAD to reconstruct the index entries

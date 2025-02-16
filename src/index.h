@@ -3,7 +3,6 @@
 
 //Check the index-format documentation for the headers info 
 
-
 struct CacheTree {
 	int node;
 };
@@ -11,26 +10,39 @@ struct CacheTree {
 struct IndexEntry{
 	char hash[41]; //should this 41 be a constant somewhere??
 	char path[PATH_MAX];
+	uint32_t mtime_sec;
+	uint32_t mtime_nanosec;
 };
 
 
 struct Index{
 	//headers --> Should HEaders be here? I dont think so
-	uint32_t numEntries;
-	IndexEntry* entries;
-	CacheTree ct;
+	int numEntries;
+	struct IndexEntry* entries;
+	//struct CacheTree ct; --> Should this be inside this struct??
 };
 
-char lastTreeHash[41]; //used when creating commit-tree
+//Since the index is a complex structure by itself, I`ll write everything here first, and later I`ll move the specific operations to other files (like fs and object)
 
-//Since the index is a complex structure by itself, I`ll write everything here firs, and later I`ll move the specific operations to other files (like fs and object)
 
-void initIndex(); //git init --> this can maybe call updateCacheEntries 
-void updateIndexEntries(); //git update-index
-void restoreIndex(); //git restore --staged
+//FS
+void writeToIndexFile(struct Index* index);
+void readFromIndexFile(struct Index* index);
+
+//Index manipulation
+void addFileToIndex(struct Index* index,
+											char* hash,
+											char* path,
+											uint32_t mtime_sec,
+											uint32_t mtime_nanosec
+										);
+
+void updateIndexEntry(struct Index* index, struct IndexEntry ie); // should this be a pointer??????? :(
+void updateAllIndexEntries(struct Index* index);//git update-index
 
 //cache tree
 void updateCacheTreeFromIndex();
 void writeTreeObjsFromCacheTree(); //git write-tree
+void restoreIndex(); //git restore --staged (This relies on the cache tree being done)
 
 

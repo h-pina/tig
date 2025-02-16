@@ -1,11 +1,14 @@
 #include "blob.h"
 #include "tree.h"
+#include "index.h"
 #include "init.h"
 #include "logger.h"
 #include <getopt.h>
 #include <string.h>
 #include <unistd.h>
 #include <stdio.h>
+#include <stdlib.h>
+
 
 //TODO: Error for cases where invalid options
 //TODO: Add help option
@@ -84,6 +87,32 @@ void parseCliCommand(char** argv, int argc){
 		};
 		entries[1] = e2;
 		createTreeObj(entries, 2);
+	} 
+	else if(strcmp(argv[1], "test_index") == 0){
+
+		struct IndexEntry* entries =  malloc(2*sizeof(struct IndexEntry));
+		entries[0] = (struct IndexEntry){
+			.path = "/test/path/1",
+			.hash = "03f5e78eb21"
+		};
+		entries[1] = (struct IndexEntry){
+			.path = "/test/path/2",
+			.hash = "03f5e78eb12312a5"
+		};
+		struct Index i = {
+			.numEntries = 2,
+			.entries = entries
+		};
+
+		log_dbg("Calling index writing function..");
+		writeToIndexFile(&i);
+
+
+		log_dbg("Reading from index");
+		struct Index retrievedI;
+		readFromIndexFile(&retrievedI);
+		log_dbg("Test Complete!");
+		
 	} 
 	else{
 		printHelpMsg();
