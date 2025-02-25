@@ -1,11 +1,14 @@
 #include "index.h"
 #include "fs.h"
 #include "logger.h"
+#include "blob.h"
+
 #include <linux/limits.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <strings.h>
 #include <sys/stat.h>
 
 void getIndexPath(char* indexDir){
@@ -62,34 +65,75 @@ void readFromIndexFile(struct Index* index){
 }
 
 
-void addFileToIndex(struct Index *index, char* hash, char* path, uint32_t mtime_sec, uint32_t mtime_nanosec){
+void addFileToIndex(
+		struct Index *index, 
+		char* hash,
+		char* path,
+		uint32_t mtime_sec,
+		uint32_t mtime_nanosec)
+	{
 	//fill indexEntry obj
 	struct IndexEntry ie;
 	
 	strcpy(ie.path, path);
 	strcpy(ie.hash, hash);
 
-	struct stat ie_stat; 
-	lstat(path, &ie_stat);
-	ie.mtime_sec = ie_stat.st_mtim.tv_sec;
-	ie.mtime_nanosec = ie_stat.st_mtim.tv_nsec;
+	ie.mtime_sec = mtime_sec;
+	ie.mtime_nanosec = mtime_nanosec;
 
 	//realloc to fit the new index entry
-	if( realloc(index->entries, sizeof(struct IndexEntry)) == NULL){
+	if( realloc(index->entries, (index->numEntries+1)*sizeof(struct IndexEntry)) == NULL){
 		log_err("Could not expand memory from index to add new index entry");
 		exit(EXIT_FAILURE);
 	}
-
 	index->entries[index->numEntries] = ie; 
 	index->numEntries++;
 }
 
+void updateIndex(struct Index* index){
+	for(int i = 0; i < index->numEntries; i++ ){
+		struct IndexEntry currEntry = index->entries[i];
 
-void updateIndexEntry(struct Index* index, struct IndexEntry ie){
-	for(int i = 0; i<index->numEntries;i++){
-		if(strcmp(index->entries[i].path, ie.path) == 0){
-			index->entries[i] = ie;
-			return;
+		struct stat ie_stat; 
+		lstat(currEntry.path, &ie_stat);
+
+		if(currEntry.mtime_sec == ie_stat.st_mtim.tv_sec &&
+			currEntry.mtime_sec == ie_stat.st_mtim.tv_sec
+		){
+			continue;
 		}
+	
+		HashObjArgs hoa = {
+			.write = 1,
+			.useStdin = 0,
+		};
+		strcpy(hoa.filename, currEntry.path);
+		
+		char hashBuffer[41];
+		hashObjCmd(hoa, hashBuffer);
+		lstat(currEntry.path, &ie_stat);
+
+		struct IndexEntry newEntry = {
+			.mtime_sec = ie_stat.st_mtim.tv_sec,
+			.mtime_nanosec = ie_stat.st_mtim.tv_nsec
+		};
+		strcpy(newEntry.path, currEntry.path);
+		strcpy(newEntry.hash, hashBuffer);
+
+		index->entries[i] = newEntry;
 	}
 }
+
+
+void printIndexEntries(struct Index* index){
+	printf("IndexEntries: \n");
+	for(int i = 0; i < index->numEntries; i++ ){
+		struct IndexEntry ie = index->entries[i];
+		printf(
+			"%d : path:%s hash:%s sec:%d nsec:%d \n",
+			i, ie.path, ie.hash, ie.mtime_sec, ie.mtime_nanosec
+		);
+	}
+}
+
+

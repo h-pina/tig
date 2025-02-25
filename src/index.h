@@ -1,5 +1,5 @@
-#include <cstdint>
 #include <limits.h>
+#include <stdint.h>
 
 //Check the index-format documentation for the headers info 
 
@@ -37,8 +37,9 @@ void addFileToIndex(struct Index* index,
 											uint32_t mtime_nanosec
 										);
 
-void updateIndexEntry(struct Index* index, struct IndexEntry ie); // should this be a pointer??????? :(
-void updateAllIndexEntries(struct Index* index);//git update-index
+
+void updateIndex(struct Index* index);
+void printIndexEntries(struct Index* index);
 
 //cache tree
 void updateCacheTreeFromIndex();

@@ -32,10 +32,11 @@ void hashObjCmd(HashObjArgs ho, char* hashBuffer){
 	log_dbg("Content to hash: %s", contentBuffer); 
 	char* content = sf_addHeaderToContent(contentBuffer, "blob");
 	char* hash = sf_hashObject(content); 
+	printf("%s\n", hash);
 	if(ho.write){
 		saveToObjDb(hash, content);
 	}
-	strcpy(hashBuffer, hash);
+	s
 	free(content);
 	free(hash);
 }

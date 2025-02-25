@@ -63,7 +63,9 @@ void parseCliCommand(char** argv, int argc){
 	//parseCliFunction is just a switch basically
 	if(strcmp(argv[1], "hash-object") == 0){
 		log_dbg("Launching hash-object command");
-		hashObjCmd(parseHashObjArgs(argv, argc));
+		char hashBuffer[41];
+		hashObjCmd(parseHashObjArgs(argv, argc), hashBuffer);
+		log_dbg("%s", hashBuffer);
 		log_dbg("hash-object command finished");
 	}
 	else if(strcmp(argv[1], "init") == 0){
@@ -88,7 +90,7 @@ void parseCliCommand(char** argv, int argc){
 		entries[1] = e2;
 		createTreeObj(entries, 2);
 	} 
-	else if(strcmp(argv[1], "test_index") == 0){
+	else if(strcmp(argv[1], "test_index_fs") == 0){
 
 		struct IndexEntry* entries =  malloc(2*sizeof(struct IndexEntry));
 		entries[0] = (struct IndexEntry){
@@ -114,8 +116,53 @@ void parseCliCommand(char** argv, int argc){
 		log_dbg("Test Complete!");
 		
 	} 
+	else if(strcmp(argv[1], "test_index_fs") == 0){
+
+		struct IndexEntry* entries =  malloc(2*sizeof(struct IndexEntry));
+		entries[0] = (struct IndexEntry){
+			.path = "/test/path/1",
+			.hash = "03f5e78eb21"
+		};
+		entries[1] = (struct IndexEntry){
+			.path = "/test/path/2",
+			.hash = "03f5e78eb12312a5"
+		};
+		struct Index i = {
+			.numEntries = 2,
+			.entries = entries
+		};
+
+		log_dbg("Calling index writing function..");
+		writeToIndexFile(&i);
+
+
+		log_dbg("Reading from index");
+		struct Index retrievedI;
+		readFromIndexFile(&retrievedI);
+		log_dbg("Test Complete!");
+		
+	} 
+	else if(strcmp(argv[1], "test_index_add") == 0){
+		struct IndexEntry* entries =  malloc(sizeof(struct IndexEntry));
+		struct Index i = {
+			.numEntries = 1,
+			.entries = entries
+		};
+		addFileToIndex(&i, "03f5e78eb12312a5", "src/test1", 01, 02);
+		addFileToIndex(&i, "03ffffffffffffff", "src/test2", 132, 2789);
+		printIndexEntries(&i);
+	} 
+	else if(strcmp(argv[1], "test_index_update") == 0){
+		struct IndexEntry* entries =  malloc(sizeof(struct IndexEntry));
+		struct Index i = {
+			.numEntries = 1,
+			.entries = entries
+		};
+		addFileToIndex(&i, "03f5e78eb12312a5", "src/test1", 01, 02);
+		addFileToIndex(&i, "03ffffffffffffff", "src/test2", 132, 2789);
+		printIndexEntries(&i);
+	} 
 	else{
 		printHelpMsg();
 	}
 }
-

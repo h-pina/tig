@@ -32,24 +32,26 @@ implementing reliability can be a fun thing in the future)
     - Solution: There is a function named _setTigFolderName_ inside the fs.c file. It allows the test functions to define a custom name for the folder. The idea is that the program will use the new folder name as the .tig folder, so the tests can run all the functions as needed. However, I`m not sure if it is completely working like this
 
 ### Tree objects
-- [ ] Create tree objects interface (This will be used by the upd)
+- [x] Create tree objects interface (This will be used by the upd) 
+
+### Index 
+
+- [x] Read and write to index file
+- [x] Add new object to index
+- [x] Update index 
+
+### Cache Tree
+
+- [ ] Clone from HEAD --> Deadline: 02/03 
+- [ ] Update Cache-Tree
+    - This includes the generation of the first cache-tree
+- [ ] tree diff
 
 ### Commit objects
 - [ ] Create commit objects interface
 - [ ] Implement git config --user.name and user.email
 - [ ] Implement commit message logic
 
-### Index and cache-tree
-> At this stage, the interfaces are already complete, now
-> we need to implement the add-commit process
-
-- [ ] Create the index file at *init* command
-- [ ] add antries to the index using the *tig update-index --add* command
-    - Also point to the user that the --add flag should be used it the index does not already have an entry
-- [ ] add antries to the index using the *tig update-index* command
-- [ ] build the cache tree at first commit
-- [ ] Create invalidate logic for staged files
-- [ ] Create new tree objects from cache-tree
 
 
 

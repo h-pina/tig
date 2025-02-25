@@ -7,4 +7,4 @@ typedef struct{
 } HashObjArgs;
 
 void readContent(char* contentBuffer, HashObjArgs opts);
-void hashObjCmd(HashObjArgs ho);
+void hashObjCmd(HashObjArgs ho, char* hashBuffer);
