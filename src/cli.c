@@ -9,6 +9,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+//TODO: Test Functions, delete later
+void createFile(const char* filename){
+	FILE* fp = fopen(filename, "w");
+	fclose(fp);
+}
+
+void removeFile(const char* filename){
+	remove(filename);
+}
 
 //TODO: Error for cases where invalid options
 //TODO: Add help option
@@ -158,9 +167,18 @@ void parseCliCommand(char** argv, int argc){
 			.numEntries = 1,
 			.entries = entries
 		};
-		addFileToIndex(&i, "03f5e78eb12312a5", "src/test1", 01, 02);
-		addFileToIndex(&i, "03ffffffffffffff", "src/test2", 132, 2789);
+		
+		addFileToIndex(&i, "04f5e78eb12312a5", "test1", 01, 02);
+		addFileToIndex(&i, "03ffffffffffffff", "test2", 132, 2789);
+		createFile("test1");
+		createFile("test2");
+		log_dbg("Mocked index entries:");
 		printIndexEntries(&i);
+		updateFullIndex(&i); 
+		log_dbg("Index entries after update:");
+		printIndexEntries(&i);
+		removeFile("test1");
+		removeFile("test2");
 	} 
 	else{
 		printHelpMsg();

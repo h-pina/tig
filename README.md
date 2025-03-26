@@ -40,9 +40,15 @@ implementing reliability can be a fun thing in the future)
 - [x] Add new object to index
 - [x] Update index 
 
+### Create "first commit flow"
+
+- [ ] tig status
+- [ ] on git add -> generate index
+- [ ] on git commit -> generate HEAD and create Cache tree
+
 ### Cache Tree
 
-- [ ] Clone from HEAD --> Deadline: 02/03 
+- [ ] Clone from HEAD 
 - [ ] Update Cache-Tree
     - This includes the generation of the first cache-tree
 - [ ] tree diff

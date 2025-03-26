@@ -38,7 +38,7 @@ void addFileToIndex(struct Index* index,
 										);
 
 
-void updateIndex(struct Index* index);
+void updateFullIndex(struct Index* index);
 void printIndexEntries(struct Index* index);
 
 //cache tree

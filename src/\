@@ -90,8 +90,9 @@ void addFileToIndex(
 	index->numEntries++;
 }
 
-void updateIndexEntry(struct Index* index, int entryIndex){
-		struct IndexEntry currEntry = index->entries[entryIndex];
+void updateFullIndex(struct Index* index){
+	for(int i = 0; i < index->numEntries; i++ ){
+		struct IndexEntry currEntry = index->entries[i];
 
 		struct stat ie_stat; 
 		lstat(currEntry.path, &ie_stat);
@@ -99,7 +100,7 @@ void updateIndexEntry(struct Index* index, int entryIndex){
 		if(currEntry.mtime_sec == ie_stat.st_mtim.tv_sec &&
 			currEntry.mtime_sec == ie_stat.st_mtim.tv_sec
 		){
-			return;
+			continue;
 		}
 	
 		HashObjArgs hoa = {
@@ -119,14 +120,10 @@ void updateIndexEntry(struct Index* index, int entryIndex){
 		strcpy(newEntry.path, currEntry.path);
 		strcpy(newEntry.hash, hashBuffer);
 
-		index->entries[entryIndex] = newEntry;
-}
-
-void updateFullIndex(struct Index* index){
-	for(int i = 0; i < index->numEntries; i++ ){
-		updateIndexEntry(index, i);
+		index->entries[i] = newEntry;
 	}
 }
+
 
 void printIndexEntries(struct Index* index){
 	printf("IndexEntries: \n");
