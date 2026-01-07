@@ -21,3 +21,9 @@ https://git-scm.com/docs/git-write-tree
 https://git-scm.com/docs/git-commit-tree
 https://git-scm.com/docs/git-restore
 https://git-scm.com/docs/index-format
+https://git-scm.com/docs/git-update-index/2.16.6#_untracked_cache
+
+
+## Caches:
+
+The untracked cache extension is not enabled by default, and its meant to be a speed up, so I will not implement it
