@@ -46,4 +46,9 @@ implementing reliability can be a fun thing in the future)
 
 ## Developer Log
 
-- \[01-jan-2026\] - So, this project has been stale for a while now :(. The last time I touched I was really struggling with the understanding and implementation of some parts of the index, and ended up just leaving it for what I initially tought would be just a few days but ended up being almost an year. Today github sent me a notification about something related to this project, and I thought that this is an amazing oportunity to just revive it entirely. There is still a lot to do in order to implement the base git functionalities, and I think Im better suited to tackle the problems I faced now that I got more experience! I need, however, to take a step back, and read both the git documentations and my implementations to regain the context for this project. Because of this, I added a new category to the Roadmap, called "Getting the project back on track". Time to start again! 
+#### 01-jan-2026 
+So, this project has been stale for a while now 😕. The last time I touched it, I was really struggling with understanding and implementing some parts of the index, and I ended up leaving it for what I initially thought would be just a few days, but it turned into almost a year.
+
+Today, GitHub sent me a notification related to this repo, and I thought this is an amazing opportunity to revive it entirely. There is still a lot to do in order to implement the base Git functionalities, and I think I’m better suited to tackle the problems I faced now that I’ve gained more experience.
+
+I do, however, need to take a step back and read both the Git documentation and my own implementations to regain context for the project. Because of this, I added a new category to the roadmap called “Getting the project back on track.” Time to start again!
