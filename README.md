@@ -1,5 +1,3 @@
-
-
 ## About this project 
 
 This is my attempt to build a git with its basic functionalities. Here are the rules I 
@@ -40,25 +38,12 @@ implementing reliability can be a fun thing in the future)
 - [x] Add new object to index
 - [x] Update index 
 
-### Create "first commit flow"
+### Getting the project back on track
 
-- [ ] tig status
-- [ ] on git add -> generate index
-- [ ] on git commit -> generate HEAD and create Cache tree
+- [ ] Review the git documentation to get back the context from the project
+- [ ] Review currently implemented functionality
+- [ ] Setup a new roadmap
 
-### Cache Tree
+## Developer Log
 
-- [ ] Clone from HEAD 
-- [ ] Update Cache-Tree
-    - This includes the generation of the first cache-tree
-- [ ] tree diff
-
-### Commit objects
-- [ ] Create commit objects interface
-- [ ] Implement git config --user.name and user.email
-- [ ] Implement commit message logic
-
-
-
-
-
+- \[01-jan-2026\] - So, this project has been stale for a while now :(. The last time I touched I was really struggling with the understanding and implementation of some parts of the index, and ended up just leaving it for what I initially tought would be just a few days but ended up being almost an year. Today github sent me a notification about something related to this project, and I thought that this is an amazing oportunity to just revive it entirely. There is still a lot to do in order to implement the base git functionalities, and I think Im better suited to tackle the problems I faced now that I got more experience! I need, however, to take a step back, and read both the git documentations and my implementations to regain the context for this project. Because of this, I added a new category to the Roadmap, called "Getting the project back on track". Time to start again! 
