@@ -76,7 +76,7 @@ void saveToObjDb(char* hash, const char* content){
 	char** splittedHash = sf_splitString(hash, 1);
 	char folderPath[PATH_MAX], filePath[PATH_MAX];
 	char tigPath[PATH_MAX];
-	get_tig_path(tigPath);
+	getTigPath(tigPath);
 	log_dbg("Identified tig base folder path: %s",tigPath);
 	sprintf(folderPath, "%s/objects/%s", tigPath,splittedHash[0]);
 	log_dbg("Hashed obj folder Path: %s",folderPath);
