@@ -1,9 +1,10 @@
 
 #include <string.h>
 
-extern char* tigFolderName;
+const char* tigFolderName = ".tig";
+
 
 void setTigFolderName(const char* name);
 const char* getTigFolderName();
-void get_tig_path(char* tigDir);
+void getTigPath(char* tigDir);
 

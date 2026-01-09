@@ -12,7 +12,7 @@
 #include <sys/stat.h>
 
 void getIndexPath(char* indexDir){
-	get_tig_path(indexDir);
+	getTigPath(indexDir);
 	strcat(indexDir,"/index");
 	log_dbg("index path used: %s", indexDir);
 }
